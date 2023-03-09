@@ -4,6 +4,8 @@ import notifee, { AndroidBadgeIconType,AndroidImportance } from '@notifee/react-
 import useFCM from './src/hooks/useFCM';
 import remoteNotifications from './src/services/notifications/remoteNotifications';
 import localNotifications  from './src/services/notifications/localNotifications';
+import messaging from '@react-native-firebase/messaging';
+
 
 function App() {
 
@@ -16,9 +18,12 @@ function App() {
   const onMessageReceived = async message => {
     await remoteNotifications.generic(message);
   };
-  React.useEffect( async () => {
-    await acquireNotificationPermission();
-    await requestNotificationToken();
+  React.useEffect(() => {
+    const getNotificationsPermissions = async () => {   
+       await acquireNotificationPermission();
+      await requestNotificationToken();
+    }
+    getNotificationsPermissions()
     const unsubscribe = messaging().onMessage(onMessageReceived);
 
     return unsubscribe;

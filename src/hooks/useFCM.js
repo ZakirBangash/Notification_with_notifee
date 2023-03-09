@@ -2,9 +2,8 @@ import notifee, {AuthorizationStatus} from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
 
-import {saveFCMRemote} from '../services/api';
+// import {createNotificationChannels} from '../services/notifications/utils';
 import {createNotificationChannels} from '../services/notifications/utils';
-import {saveFCMLocalStorage} from '../utils/utils';
 
 const useFCM = () => {
   const acquireNotificationPermission = async () => {
@@ -36,8 +35,9 @@ const useFCM = () => {
     }
 
     const token = await messaging().getToken();
-    await saveFCMLocalStorage(token);
-    await saveFCMRemote(token);
+    console.log('token', token);
+    // await saveFCMLocalStorage(token);
+    // await saveFCMRemote(token);
   };
 
   return {
